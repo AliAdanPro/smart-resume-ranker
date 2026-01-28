@@ -1,0 +1,1 @@
+depth-First Traversal builds the process tree like completing one family branch fully before starting the next. It ensures parents create children in sequence, pipes connect properly, and cleanup happens from leaves back to root. This prevents deadlock by making each process wait for its children to finish first.

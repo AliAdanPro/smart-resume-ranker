@@ -1,0 +1,42 @@
+Sarah Johnson
+sarah.johnson@techmail.com | (555) 987-6543
+
+OBJECTIVE
+Experienced Data Scientist seeking to leverage machine learning expertise and leadership skills in a challenging role.
+
+TECHNICAL SKILLS
+Python | R | SQL | TensorFlow | PyTorch | Deep Learning | NLP | Computer Vision
+Pandas | NumPy | SciPy | Matplotlib | Scikit-learn | Keras
+Git | Docker | AWS | GCP | Linux
+
+PROFESSIONAL EXPERIENCE
+
+Lead Data Scientist - AI Solutions Inc. (2020-Present)
+• Architected and deployed 15+ machine learning models in production
+• Mentored team of 6 junior data scientists
+• Reduced model training time by 60% through optimization
+• Implemented MLOps pipeline for automated model deployment
+• Achieved 94% accuracy on customer churn prediction model
+
+Data Scientist - Innovation Labs (2018-2020)
+• Developed recommendation system serving 100K+ users
+• Built sentiment analysis models for social media monitoring
+• Created data visualization dashboards using Tableau
+• Collaborated with cross-functional teams on AI initiatives
+
+Junior Data Analyst - Analytics Co. (2016-2018)
+• Performed statistical analysis on large datasets
+• Created SQL queries for business intelligence reports
+• Automated reporting processes using Python scripts
+
+EDUCATION
+Master of Science in Data Science - MIT, 2018
+Bachelor of Science in Statistics - UC Berkeley, 2016
+
+PUBLICATIONS
+- "Advanced Ensemble Methods for Time Series Forecasting" - ICML 2022
+- "Neural Networks for Anomaly Detection" - NeurIPS 2021
+
+AWARDS
+- Best Paper Award, International AI Conference 2022
+- Top Kaggle Competitor (Gold Medal)

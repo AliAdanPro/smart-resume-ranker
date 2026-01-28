@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Ranker - Results</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bs-body-bg: #0a0e27;
+            --bs-body-color: #e2e8f0;
+            --primary-glow: #00f3ff;
+            --secondary-glow: #bc13fe;
+            --success-glow: #00ff9d;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
+            min-height: 100vh;
+        }
+        
+        .glow-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .glow-card:hover {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.1) 0%, rgba(188, 19, 254, 0.1) 100%);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+        
+        .badge-glow {
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+            color: #000;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+        }
+        
+        .progress-bar-glow {
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        
+        .top-candidate {
+            border-left: 4px solid var(--success-glow) !important;
+            background: rgba(0, 255, 157, 0.05) !important;
+        }
+        
+        .skill-badge {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--primary-glow);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .navbar-custom {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark navbar-custom sticky-top border-bottom border-secondary">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="fas fa-robot text-info fs-4 me-2"></i>
+                <span class="fw-bold">Smart Resume Ranker <small class="text-muted fs-6">v2.0</small></span>
+            </a>
+            <div class="d-flex">
+                <a href="/" class="btn btn-outline-info btn-sm me-2">
+                    <i class="fas fa-home"></i> Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        
+        <!-- Stats Summary Row -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card glow-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-file-alt text-info fs-1 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Total Resumes</h6>
+                        <h2 class="display-5 fw-bold text-info mb-0">{{ results|length }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card glow-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-trophy text-warning fs-1 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Top Match</h6>
+                        <h2 class="display-5 fw-bold text-warning mb-0">{{ results[0]['score'] if results else 0 }}%</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card glow-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-brain text-success fs-1 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Algorithm</h6>
+                        <h2 class="h4 fw-bold text-success mb-0">{{ algorithm|upper }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card glow-card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <a href="/visualize" class="btn btn-info w-100 mb-2">
+                            <i class="fas fa-chart-line"></i> View Graphs
+                        </a>
+                        <a href="/download" class="btn btn-outline-info w-100">
+                            <i class="fas fa-download"></i> Export CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics (if available) -->
+        {% if metrics %}
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card metric-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-bullseye text-info fs-2 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Accuracy</h6>
+                        <h2 class="display-6 fw-bold text-info mb-1">{{ metrics.quality.accuracy_score }}%</h2>
+                        <span class="badge badge-glow">{{ metrics.summary.quality_status }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-stopwatch text-warning fs-2 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Execution Time</h6>
+                        <h2 class="display-6 fw-bold text-warning mb-1">{{ metrics.performance.execution_time_sec }}s</h2>
+                        <span class="badge bg-warning text-dark">{{ metrics.summary.status }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-memory text-success fs-2 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Peak Memory</h6>
+                        <h2 class="display-6 fw-bold text-success mb-1">{{ metrics.performance.peak_memory_mb }} MB</h2>
+                        <span class="badge bg-success">{{ metrics.summary.memory_status }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card metric-card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle text-info fs-2 mb-2"></i>
+                        <h6 class="text-muted text-uppercase small mb-2">Processed</h6>
+                        <h2 class="display-6 fw-bold text-info mb-1">{{ metrics.quality.resumes_processed }}</h2>
+                        <span class="badge bg-info text-dark">Resumes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Results Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card glow-card">
+                    <div class="card-header bg-transparent border-secondary">
+                        <h5 class="mb-0 text-info">
+                            <i class="fas fa-ranking-star"></i> Ranked Candidates
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover mb-0">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th scope="col" class="text-center" style="width: 80px;">Rank</th>
+                                        <th scope="col">Candidate</th>
+                                        <th scope="col">Contact</th>
+                                        <th scope="col" style="width: 200px;">Score</th>
+                                        <th scope="col" class="text-center" style="width: 80px;">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for resume in results %}
+                                    <tr class="{% if loop.index <= 3 %}top-candidate{% endif %}">
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if loop.index == 1 %}bg-warning text-dark{% elif loop.index == 2 %}bg-info{% elif loop.index == 3 %}bg-success{% else %}bg-secondary{% endif %} fs-6">
+                                                #{{ loop.index }}
+                                            </span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-file-pdf text-danger fs-4 me-3"></i>
+                                                <div>
+                                                    <div class="fw-bold text-light">{{ resume['filename'] }}</div>
+                                                    <small class="text-muted">
+                                                        <i class="fas fa-user-tag"></i> {{ resume['scores']['persona'] }}% | 
+                                                        <i class="fas fa-lightbulb"></i> {{ resume['scores']['innovation'] }}%
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="small">
+                                                <div class="mb-1">
+                                                    <i class="fas fa-envelope text-info"></i> 
+                                                    <span class="text-light">{{ resume['email'] }}</span>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-phone text-success"></i> 
+                                                    <span class="text-light">{{ resume['phone'] }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress flex-grow-1 me-2" style="height: 25px;">
+                                                    <div class="progress-bar progress-bar-glow progress-bar-striped progress-bar-animated" 
+                                                         role="progressbar" 
+                                                         style="width: {{ resume['score'] if resume['score'] <= 100 else 100 }}%"
+                                                         aria-valuenow="{{ resume['score'] }}" 
+                                                         aria-valuemin="0" 
+                                                         aria-valuemax="100">
+                                                        <strong>{{ resume['score'] }}%</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <button class="btn btn-sm btn-outline-info" 
+                                                    type="button" 
+                                                    data-bs-toggle="collapse" 
+                                                    data-bs-target="#details{{ loop.index }}"
+                                                    aria-expanded="false">
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="details{{ loop.index }}">
+                                        <td colspan="5" class="bg-dark">
+                                            <div class="p-4">
+                                                <div class="row g-3">
+                                                    <!-- Left Column -->
+                                                    <div class="col-md-6">
+                                                        <h6 class="text-info mb-3">
+                                                            <i class="fas fa-graduation-cap"></i> Education & Scores
+                                                        </h6>
+                                                        <p class="mb-2"><strong>Education:</strong> {{ resume['education'] }}</p>
+                                                        
+                                                        <div class="mt-3">
+                                                            <h6 class="text-info mb-2">AI Scores Breakdown</h6>
+                                                            <div class="row g-2">
+                                                                <div class="col-6">
+                                                                    <div class="card bg-secondary bg-opacity-25 border-0">
+                                                                        <div class="card-body p-2 text-center">
+                                                                            <i class="fas fa-chart-line text-info"></i>
+                                                                            <div class="small">Career</div>
+                                                                            <div class="fw-bold">{{ resume['scores']['career'] }}%</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="card bg-secondary bg-opacity-25 border-0">
+                                                                        <div class="card-body p-2 text-center">
+                                                                            <i class="fas fa-exchange-alt text-success"></i>
+                                                                            <div class="small">Transfer</div>
+                                                                            <div class="fw-bold">{{ resume['scores']['transfer'] }}%</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="card bg-secondary bg-opacity-25 border-0">
+                                                                        <div class="card-body p-2 text-center">
+                                                                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                                                                            <div class="small">Gap</div>
+                                                                            <div class="fw-bold">{{ resume['scores']['gap'] }}%</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="card bg-secondary bg-opacity-25 border-0">
+                                                                        <div class="card-body p-2 text-center">
+                                                                            <i class="fas fa-user-tag text-primary"></i>
+                                                                            <div class="small">Persona</div>
+                                                                            <div class="fw-bold">{{ resume['scores']['persona'] }}%</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Right Column -->
+                                                    <div class="col-md-6">
+                                                        {% if resume['ensemble_details'] %}
+                                                        <div class="alert alert-info bg-opacity-25 border-info">
+                                                            <h6 class="alert-heading">
+                                                                <i class="fas fa-rocket"></i> Super Accuracy Breakdown
+                                                            </h6>
+                                                            <div class="row g-2 mt-2">
+                                                                <div class="col-6">
+                                                                    <strong>Neural:</strong> {{ resume['ensemble_details']['neural_score'] }}%
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <strong>Graph:</strong> {{ resume['ensemble_details']['graph_score'] }}%
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <strong>Synergy:</strong> +{{ resume['ensemble_details']['synergy_bonus'] }}%
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <strong>Confidence:</strong> x{{ resume['ensemble_details']['confidence_multiplier'] }}
+                                                                </div>
+                                                            </div>
+                                                            {% if resume['ensemble_details']['achieved_95_plus'] %}
+                                                            <div class="alert alert-success bg-opacity-50 mt-3 mb-0">
+                                                                <i class="fas fa-check-circle"></i> 95%+ Accuracy Achieved!
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        {% endif %}
+                                                        
+                                                        <div class="mt-3">
+                                                            <h6 class="text-warning">
+                                                                <i class="fas fa-exclamation-circle"></i> Missing Skills
+                                                            </h6>
+                                                            <div class="d-flex flex-wrap gap-2">
+                                                                {% if resume['missing_skills'] %}
+                                                                    {% for skill in resume['missing_skills'][:8] %}
+                                                                    <span class="badge bg-danger bg-opacity-50">{{ skill }}</span>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    <span class="text-success"><i class="fas fa-check"></i> No critical gaps!</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-3 border-top border-secondary text-center text-muted">
+        <div class="container">
+            <p class="mb-0">
+                <i class="fas fa-circle text-success" style="font-size: 0.6rem;"></i> 
+                System Ready | Powered by <strong>8 AI Modules</strong> | v2.0.0 | 
+                &copy; Copyright Reserved by <strong>Siraj Dula</strong>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Particles JS (optional) -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+flask
+pandas
+numpy
+scikit-learn
+matplotlib
+fuzzywuzzy
+python-docx
+PyPDF2
+psutil
+python-Levenshtein

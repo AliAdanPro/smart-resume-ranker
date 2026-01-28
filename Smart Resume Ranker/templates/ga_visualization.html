@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Smart Resume Ranker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .visualization-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .viz-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(0, 243, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .viz-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .viz-header p {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            color: #000;
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .chart-card {
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-card:hover {
+            border-color: rgba(0, 243, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.2);
+        }
+
+        .chart-card:hover::before {
+            opacity: 1;
+        }
+
+        .chart-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .chart-card:hover .chart-img {
+            transform: scale(1.02);
+        }
+
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(10, 10, 15, 0.7);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.2);
+        }
+
+        .stat-box h4 {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .viz-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles-js"></canvas>
+    <div class="app-container">
+        <!-- Title Bar -->
+        <header class="title-bar">
+            <div class="app-title">
+                <i class="fas fa-robot"></i>
+                <span>Smart Resume Ranker <small>v2.1</small></span>
+            </div>
+            <div class="window-controls">
+                <span class="control-btn minimize"><i class="fas fa-minus"></i></span>
+                <span class="control-btn maximize"><i class="fas fa-expand"></i></span>
+                <span class="control-btn close"><i class="fas fa-times"></i></span>
+            </div>
+        </header>
+
+        <main class="visualization-container">
+            <a href="/results" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Results
+            </a>
+
+            <div class="viz-header">
+                <h1><i class="fas fa-chart-bar"></i> Analytics Dashboard</h1>
+                <p>Visual insights from AI-powered resume analysis</p>
+                {% if has_real_data %}
+                <div style="display: inline-block; padding: 0.5rem 1rem; background: rgba(0, 255, 157, 0.2); border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 8px; color: #00ff9d; font-weight: 600; margin-top: 1rem;">
+                    <i class="fas fa-check-circle"></i> Real GA Convergence Data
+                </div>
+                {% else %}
+                <div style="display: inline-block; padding: 0.5rem 1rem; background: rgba(255, 193, 7, 0.2); border: 1px solid rgba(255, 193, 7, 0.4); border-radius: 8px; color: #ffc107; font-weight: 600; margin-top: 1rem;">
+                    <i class="fas fa-exclamation-triangle"></i> Using Fallback Data
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="stats-banner">
+                <div class="stat-box">
+                    <h4>Algorithm Used</h4>
+                    <div class="value" style="font-size: 1.2rem; text-transform: uppercase;">{{ algorithm if algorithm else 'all' }}</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Core Algorithms</h4>
+                    <div class="value">5</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Data Source</h4>
+                    <div class="value" style="font-size: 1rem;">{% if has_real_data %}<i class="fas fa-check" style="color: #00ff9d;"></i> Real{% else %}<i class="fas fa-database" style="color: #ffc107;"></i> Sample{% endif %}</div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3><i class="fas fa-dna"></i> Genetic Algorithm Convergence</h3>
+                    <p>{% if has_real_data %}Real fitness score improvement over generations{% else %}Sample convergence pattern{% endif %}</p>
+                    <img src="data:image/png;base64,{{ ga_convergence_plot }}" alt="GA Convergence Plot" class="chart-img">
+                </div>
+
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie"></i> Score Distribution</h3>
+                    <p>Distribution of candidate scores</p>
+                    <img src="data:image/png;base64,{{ score_dist_plot }}" alt="Score Distribution Plot" class="chart-img">
+                </div>
+            </div>
+        </main>
+
+        <footer class="status-bar">
+            <p><i class="fas fa-circle" style="color: #4ade80; font-size: 0.6rem;"></i> System Ready | Powered by <strong>5 Core AI Algorithms</strong> | v2.0.0 | &copy; Copyright Reserved by <strong>Siraj Dula</strong></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

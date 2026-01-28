@@ -1,0 +1,49 @@
+MICHAEL CHEN
+michael.chen@devmail.com
++1 (555) 234-5678
+
+SUMMARY
+Full-stack developer transitioning to machine learning with strong Python programming skills and recent AI project experience.
+
+CORE COMPETENCIES
+✓ Python Programming (3 years)
+✓ Machine Learning (1 year)
+✓ Web Development (React, Django, Flask)
+✓ Database Management (PostgreSQL, MongoDB)
+✓ API Development (REST, GraphQL)
+
+WORK HISTORY
+
+Software Developer | WebTech Solutions | 2021-Present
+- Developed RESTful APIs using Flask and Django
+- Built machine learning features for product recommendations
+- Implemented data processing pipelines with Pandas
+- Created web applications using React and Python backend
+- Worked with ML models for user behavior prediction
+
+Junior Developer | StartupHub | 2020-2021
+- Maintained and enhanced Python-based applications
+- Participated in agile development sprints
+- Wrote unit tests and documentation
+- Collaborated with data team on analytics features
+
+EDUCATION
+Bachelor of Engineering in Software Engineering
+University of Toronto, 2020
+
+Online Certifications:
+- Machine Learning Specialization (Coursera/Stanford)
+- Deep Learning Specialization (deeplearning.ai)
+- Python for Data Science (IBM)
+
+PROJECTS
+• Image Classification System: Built CNN model with 89% accuracy using TensorFlow
+• Stock Price Predictor: LSTM model for time series forecasting
+• Chatbot Application: NLP-based customer service bot using transformers
+
+TECHNICAL STACK
+Languages: Python, JavaScript, SQL, Java
+ML/AI: TensorFlow, scikit-learn, NLTK, OpenCV
+Web: Flask, Django, React, Node.js
+Databases: PostgreSQL, MongoDB, Redis
+Tools: Git, Docker, VS Code, Jupyter

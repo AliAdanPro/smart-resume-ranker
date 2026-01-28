@@ -1,0 +1,68 @@
+Emily Davis
+📧 emily.davis@aiexpert.com | 📱 555-876-5432
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MACHINE LEARNING ENGINEER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROFESSIONAL PROFILE
+Highly skilled ML Engineer with 6+ years building and deploying production-grade machine learning systems. Expert in deep learning, computer vision, and MLOps.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TECHNICAL EXPERTISE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Machine Learning & AI
+├─ Deep Learning: PyTorch, TensorFlow 2.x, Keras
+├─ Computer Vision: OpenCV, YOLO, ResNet, VGG
+├─ NLP: BERT, GPT, Transformers, spaCy
+├─ MLOps: MLflow, Kubeflow, Airflow
+└─ Frameworks: scikit-learn, XGBoost, LightGBM
+
+Programming & Tools
+├─ Python (Expert), C++, CUDA
+├─ Cloud: AWS SageMaker, GCP AI Platform, Azure ML
+├─ DevOps: Docker, Kubernetes, CI/CD, Jenkins
+└─ Monitoring: Prometheus, Grafana, ELK Stack
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PROFESSIONAL EXPERIENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Senior ML Engineer | DeepTech AI | 2022-Present
+► Architected end-to-end ML pipeline processing 10M+ predictions/day
+► Improved model latency by 75% through optimization and quantization
+► Led migration to Kubernetes-based infrastructure
+► Mentored 8 engineers on ML best practices
+► Achieved 97% uptime for production ML services
+
+ML Engineer | Neural Networks Inc. | 2019-2022
+► Developed computer vision models for autonomous systems
+► Built real-time object detection system (45 FPS on edge devices)
+► Implemented A/B testing framework for model evaluation
+► Reduced cloud costs by 40% through efficient resource allocation
+
+Research Engineer | AI Lab | 2018-2019
+► Published 3 papers in top-tier ML conferences
+► Developed novel attention mechanisms for NLP tasks
+► Collaborated with academia on cutting-edge research
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EDUCATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Ph.D. in Machine Learning | Carnegie Mellon University | 2018
+Thesis: "Efficient Deep Neural Networks for Edge Computing"
+
+M.S. in Computer Science | Stanford University | 2015
+
+B.S. in Computer Engineering | MIT | 2013
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACHIEVEMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏆 AI Excellence Award 2023
+🏆 Patent: "Method for Efficient Neural Network Training"
+🏆 Top 1% on Kaggle (Grandmaster)
+📝 15+ peer-reviewed publications (1200+ citations)
